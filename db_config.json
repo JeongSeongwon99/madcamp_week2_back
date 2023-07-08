@@ -1,7 +1,0 @@
-{
-    "host": "localhost",
-    "port": "80",
-    "user": "root",
-    "password": "secret",
-    "database": "user_db"
-  }
