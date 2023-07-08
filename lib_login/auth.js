@@ -1,26 +1,10 @@
-// var express = require('express');
-// var router = express.Router();
+var express = require('express');
+var router = express.Router();
 
 // var template = require('./template.js');
-// var db = require('./db');
+var db = require('./db');
 
-// // 로그인 화면
-// router.get('/login', function (request, response) {
-//     var title = '로그인';
-//     var html = template.HTML(title,`
-//             <h2>로그인</h2>
-//             <form action="/auth/login_process" method="post">
-//             <p><input class="login" type="text" name="username" placeholder="아이디"></p>
-//             <p><input class="login" type="password" name="pwd" placeholder="비밀번호"></p>
-//             <p><input class="btn" type="submit" value="로그인"></p>
-//             </form>            
-//             <p>계정이 없으신가요?  <a href="/auth/register">회원가입</a></p> 
-//         `, '');
-//     response.send(html);
-// });
-
-// // 로그인 프로세스
-// router.post('/login_process', function (request, response) {
+router.post('/login_process', function (request, response) {
 //     var username = request.body.username;
 //     var password = request.body.pwd;
 //     if (username && password) {             // id와 pw가 입력되었는지 확인
@@ -43,7 +27,7 @@
 //         response.send(`<script type="text/javascript">alert("아이디와 비밀번호를 입력하세요!"); 
 //         document.location.href="/auth/login";</script>`);    
 //     }
-// });
+});
 
 // // 로그아웃
 // router.get('/logout', function (request, response) {

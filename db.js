@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+var mysql = require('mysql2');
 var db_config = require('./db_config.json');
 
 const conn = {
@@ -10,8 +10,12 @@ const conn = {
 };
 
 var db = mysql.createConnection(conn);
-db.connect();
+db.connect((err) => {
+    if (err) {
+        console.error('MySQL 연결 실패: ', err);
+    } else {
+        console.log('MySQL에 연결되었습니다.');
+    }
+});
 
-db.end();
-
-// db.query('SELECT * FROM ')
+module.exports = db;
