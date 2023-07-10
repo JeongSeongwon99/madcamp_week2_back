@@ -3,10 +3,10 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db');
 
-router.get('/get', function (req, res, next) {
-    console.log('GET 호출 / data : ' + req.query.data);
+router.post('/get', function (req, res, next) {
+    console.log('GET 호출 / data : ' + req.body.data);
     console.log('path : ' + req.path);
-    res.send('get success')
+    res.send(true);
 });
 
 router.use(bodyParser.json());
@@ -17,19 +17,19 @@ router.post('/', function (req, res, next) {
     const userIdPw = JSON.parse(userInfo);
 
     var userId = userIdPw.id;
-    var userPw = userIdPw.password
+    var userPw = userIdPw.password;
+
+    console.log(userId, userPw);
     
-    db.query('SELECT * FROM userTable WHERE id = ? AND password = ?', [userId, userPw], function(error, results, fields){
+    db.query('SELECT * FROM usertable WHERE id = ? AND password = ?', [userId, userPw], function(error, results, fields){
         if (error) throw error;
         if (results.length > 0){
-            res.send('post fail')
-        }
-        else {
             res.send('post success')
         }
+        else {
+            res.send('post fail')
+        }
     })
-
-    console.log('path : ' + req.path);
 });
 
 router.put('/put/:id', function (req, res, next) {
