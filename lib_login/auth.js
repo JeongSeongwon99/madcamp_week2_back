@@ -16,13 +16,15 @@ router.post('/login', function (req, res) {
 
     console.log(userId, userPw);
     
-    db.query('SELECT * FROM usertable WHERE id = ? AND password = ?', [userId, userPw], function(error, results, fields){
+    db.query('SELECT nickname FROM usertable WHERE username = ? AND password = ?', [userId, userPw], function(error, results, fields){
         if (error) throw error;
         if (results.length > 0){
-            res.status(200).send(true)
+            const nickname = results[0].nickname;
+            console.log(nickname);
+            res.status(200).send(nickname);
         }
         else {
-            res.status(300).send(false)
+            res.status(300).send('false')
         }
     })
 });
@@ -36,7 +38,7 @@ router.post('/login', function (req, res) {
  
 // 아이디 중복체크
 router.post('/dup_id', function(req, res){
-    const username = req.body.data;
+    const username = req.body.username;
     db.query('SELECT * FROM usertable WHERE username = ? AND platform = ?', [username, 'local'], function(error, results, fields) {
         if (error) throw error;
         if(results.length <= 0){
@@ -48,7 +50,7 @@ router.post('/dup_id', function(req, res){
 })
 
 router.post('/dup_nickname', function(req, res){
-    const nickname = req.body.data;
+    const nickname = req.body.nickname;
     db.query('SELECT * FROM usertable WHERE nickname = ?', [nickname], function(error, results, fields) {
         if (error) throw error;
         if(results.length <= 0){
