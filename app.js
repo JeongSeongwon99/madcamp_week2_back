@@ -8,7 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var retrofitRouter = require('./routes/retrofit');
 var addressRouter = require('./routes/address');
-var authRouter = require('./lib_login/auth');
+var authRouter = require('./routes/auth');
 
 var app = express();
 
