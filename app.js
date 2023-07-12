@@ -6,9 +6,11 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var retrofitRouter = require('./routes/retrofit');
 var addressRouter = require('./routes/address');
 var authRouter = require('./routes/auth');
+var profileRouter = require('./routes/profile');
+var boardRouter = require('./routes/board');
+var voteRouter = require('./routes/vote');
 
 var app = express();
 
@@ -24,9 +26,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/profile', usersRouter);
-app.use('/login', retrofitRouter);
 app.use('/address', addressRouter);
 app.use('/auth', authRouter);
+app.use('/profile', profileRouter);
+app.use('/main', boardRouter);
+app.use('/vote', voteRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -7,6 +7,12 @@ var db = require('../db');
 router.use(bodyParser.json());
 router.use(express.urlencoded({extended: true}))
 
+router.use((req, res, next) => {
+    console.log("sfd");
+    next();
+});
+
+
 router.post('/login', function (req, res) {
     const userInfo = req.body.data;
     const userIdPw = JSON.parse(userInfo);
@@ -73,8 +79,34 @@ router.post('/join', function(req, res) {
     const profile = new_userInfo.profile;
     db.query('INSERT INTO usertable (username, password, platform, nickname, place, profile) VALUES(?,?,?,?,?,?)', [username, password, platform, nickname, address, profile], function (error, data) {
         if (error) throw error;
-        res.status(200).send(true);
+        res.status(200).send(nickname);
     });
 });
+
+router.post('/kakao', (req, res) => {
+    const username = req.body.data;
+    console.log(username);
+    db.query('SELECT * FROM usertable WHERE username = ? && loginPlatform = ?', [username, 'kakao'], function (error, results, fields) {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.status(200).send(results[0].nickname);
+        }
+        else {
+            res.status(300).send('post fail');
+        }
+    })
+});
+
+router.post('/kakaojoin', (req, res) => {
+    
+    const { username, password,  profile, nickname, platform,place } = JSON.parse(req.body.data);
+    db.query('INSERT INTO usertable  (username, password, loginPlatform, profile, nickname, place) VALUES ( ?, ?, ?, ?, ?, ?)',  [username, password, platform, profile, nickname, place], function (err, result) {
+        
+        if (err) throw err;
+        
+        res.status(200).send(nickname);
+    });
+});
+
 
 module.exports = router;
